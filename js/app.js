@@ -93,11 +93,31 @@ function getCoursesFromStorage() {
 
 
 function removeCourse(e) {
+    let course, courseId;
 
     if(e.target.classList.contains('remove')) {
         e.target.parentElement.parentElement.remove();
+        course = e.target.parentElement.parentElement;
+        courseId = course.querySelector('a').getAttribute('data-id');
     }
+    console.log(courseId);
+    removeCourseLocalStorage(courseId);
 }
+
+function removeCourseLocalStorage(id) {
+    let coursesLS = getCoursesFromStorage();
+
+    coursesLS.forEach(function(courseLS, index) {
+        if(courseLS.id === id) {
+            coursesLS.splice(index, 1);
+        }
+
+    });
+    
+    localStorage.setItem('courses', JSON.stringify(coursesLS));
+
+}
+
 
 function clearCart() {
 
